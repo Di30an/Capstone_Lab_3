@@ -5,7 +5,7 @@ import sqlite3
 conn = sqlite3.connect('first_db.sqlite')
 
 # Create a table
-conn.excite('create table phone  (brand text, version interger)')
+conn.execute('create table phones  (brand text, version interger)')
 
 # Add some data 
 conn.execute('insert into phones values ("Android", 5)')
@@ -14,7 +14,7 @@ conn.execute('insert into phones values ("iPhone", 6)')
 conn.commit()
 
 
-# Excute a query. excute() returns a cusor
+# Excute a query. execute() returns a cusor
 # Can use the sursor in a loop to read each row in turn.
 for row in conn.execute('select * from phones'):
     print(row)
