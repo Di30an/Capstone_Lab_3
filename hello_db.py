@@ -1,27 +1,32 @@
 import sqlite3
 
 # Creates or opens connection to db file
-
 conn = sqlite3.connect('first_db.sqlite')
+conn.row_factory = sqlite3.Row  # Upgrade row_factory
 
 # Create a table
-conn.execute('create table phones  (brand text, version interger)')
+conn.execute('create table if not exists phones  (brand text, version interger)')
 
 # Add some data 
 conn.execute('insert into phones values ("Android", 5)')
 conn.execute('insert into phones values ("iPhone", 6)')
 
-conn.commit()
+conn.commit()  # Finalize updates
 
-
-# Excute a query. execute() returns a cusor
-# Can use the sursor in a loop to read each row in turn.
 for row in conn.execute('select * from phones'):
     print(row)
 
-conn.execute('drop table phones') # Delete table
+for row in conn.execute('select * from phones'):
+    print (row[0]) # The brand
+    print (row[1]) # The version
+
 
 conn.commit() # Ask the database to save changes - dont forget!
+
+for row in conn.execute('select * from phones'):
+    print(row['brand'])
+    print(row['version'])
+
 
 conn.close() # And close connection. 
 
